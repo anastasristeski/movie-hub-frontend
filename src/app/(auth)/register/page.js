@@ -1,10 +1,17 @@
 "use client";
-import Link from "next/link";
 import { useState } from "react";
+import Link from "next/link";
 
-export default function SignInPage() {
+export default function RegisterPage() {
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(firstName, lastName, email, password);
+  };
 
   return (
     <main className="min-h-screen flex items-center justify-center px-4">
@@ -17,14 +24,39 @@ export default function SignInPage() {
           </div>
 
           <h1 className="text-3xl font-bold mb-2 text-(--foreground)">
-            Welcome Back
+            Create Account
           </h1>
-          <p className="text-(--muted-foreground)">
-            Sign in to your MovieHub account
-          </p>
         </div>
 
-        <form className="space-y-5">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          <div>
+            <label className="block mb-1 font-semibold text-sm text-(--foreground)">
+              First Name
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 rounded bg-(--input) border border-(--border) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+              placeholder="John"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </div>
+
+          <div>
+            <label className="block mb-1 font-semibold text-sm text-(--foreground)">
+              Last Name
+            </label>
+            <input
+              type="text"
+              className="w-full px-4 py-2 rounded bg-(--input) border border-(--border) focus:outline-none focus:ring-2 focus:ring-(--primary)"
+              placeholder="Doe"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
+
           <div>
             <label className="block mb-1 font-semibold text-sm text-(--foreground)">
               Email
@@ -35,6 +67,7 @@ export default function SignInPage() {
               placeholder="you@example.com"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
             />
           </div>
 
@@ -48,6 +81,7 @@ export default function SignInPage() {
               placeholder="••••••••"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
+              required
             />
           </div>
 
@@ -55,18 +89,19 @@ export default function SignInPage() {
             type="submit"
             className="w-full bg-(--primary) text-(--primary-foreground) py-2 rounded font-semibold hover:opacity-90"
           >
-            Sign In
+            Create Account
           </button>
         </form>
 
+        {/* Link */}
         <div className="mt-6 text-center text-sm">
           <p className="text-(--muted-foreground)">
-            Don’t have an account?{" "}
+            Already have an account?
             <Link
-              href="/register"
-              className="text-(--accent) hover:text-(--primary) transition font-medium"
+              href="/signin"
+              className="text-(--accent) hover:text-(--primary) transition font-medium ml-1"
             >
-              Create one
+              Sign in
             </Link>
           </p>
         </div>

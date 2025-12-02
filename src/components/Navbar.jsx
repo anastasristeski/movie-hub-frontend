@@ -1,4 +1,5 @@
 "use client";
+import { isLoggedIn, logout } from "@/lib/api/auth";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -10,12 +11,14 @@ export default function Navbar() {
     }`;
   return (
     <nav className=" flex  justify-between  items-center px-32 py-4 bg-(--background)">
-      <Link
-        href="/"
-        className="text-(--foreground) text-2xl bg-(--primary) font-bold px-5 rounded"
-      >
-        MovieHubLogo
-      </Link>
+      <div>
+        <span className="text-2xl font-bold text-(--foreground) bg-(--primary) rounded-lg p-2">
+          MH
+        </span>
+        <Link href="/" className="text-(--foreground) text-2xl font-bold px-5">
+          MovieHub
+        </Link>
+      </div>
       <div className="flex gap-8 text-lg  text-(--foreground)">
         <Link href="/streaming" className={linkClass("/streaming")}>
           Streaming
@@ -24,13 +27,31 @@ export default function Navbar() {
           In Theatres
         </Link>
       </div>
-      <div>
-        <Link
-          href="/signin"
-          className="bg-(--primary) font-bold px-5 py-2 rounded"
-        >
-          Sign in
-        </Link>
+      <div className="flex gap-4">
+        {isLoggedIn() ? (
+          <Link
+            href="/signin"
+            onClick={logout}
+            className="bg-(--primary) font-bold px-5 py-2 rounded"
+          >
+            Logout
+          </Link>
+        ) : (
+          <>
+            <Link
+              href="/signin"
+              className="bg-(--primary) font-bold px-5 py-2 rounded"
+            >
+              Sign in
+            </Link>
+            <Link
+              href="/register"
+              className="bg-(--primary) font-bold px-5 py-2 rounded"
+            >
+              Register
+            </Link>
+          </>
+        )}
       </div>
     </nav>
   );
