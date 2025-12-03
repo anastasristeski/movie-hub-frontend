@@ -1,6 +1,5 @@
-import Footer from "@/components/Footer";
 import Hero from "@/components/Hero";
-import Navbar from "@/components/Navbar";
+
 import TrendingRow from "@/components/TrendingRow";
 
 async function fetchTrending(type) {
