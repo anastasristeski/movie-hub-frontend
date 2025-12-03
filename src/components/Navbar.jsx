@@ -10,7 +10,7 @@ export default function Navbar() {
       pathname === path ? "text-[var(--primary)]" : "text-white"
     }`;
   return (
-    <nav className=" flex  justify-between  items-center px-32 py-4 bg-(--background)">
+    <div className=" flex  justify-between  items-center px-32 py-4 bg-(--background)">
       <div>
         <span className="text-2xl font-bold text-(--foreground) bg-(--primary) rounded-lg p-2">
           MH
@@ -53,6 +53,6 @@ export default function Navbar() {
           </>
         )}
       </div>
-    </nav>
+    </div>
   );
 }

@@ -17,11 +17,9 @@ export default async function Home() {
   ]);
   return (
     <main>
-      <Navbar />
       <Hero />
       <TrendingRow title="Trending Today" movies={day} />
       <TrendingRow title="Trending this week" movies={week} />
-      <Footer />
     </main>
   );
 }

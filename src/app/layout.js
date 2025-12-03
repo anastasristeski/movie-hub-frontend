@@ -1,4 +1,6 @@
+import Navbar from "@/components/Navbar";
 import "./globals.css";
+import Footer from "@/components/Footer";
 export const metadata = {
   title: "Moviehub",
   description: "Movies platform",
@@ -6,7 +8,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className="bg-black text-white">{children}</body>
+      <body className="bg-black text-white">
+        <Navbar />
+        {children}
+        <Footer />
+      </body>
     </html>
   );
 }
