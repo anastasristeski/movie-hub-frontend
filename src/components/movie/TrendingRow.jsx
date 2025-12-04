@@ -1,5 +1,4 @@
 import TrendingCard from "./TrendingCard";
-
 export default function TrendingRow({ title, movies }) {
   return (
     <div className="mb-8 px-4 mx-auto max-w-6xl ">

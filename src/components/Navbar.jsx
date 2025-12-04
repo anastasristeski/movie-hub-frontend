@@ -2,7 +2,7 @@
 import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-
+import { LogOut, User } from "lucide-react";
 export default function Navbar() {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();
@@ -11,34 +11,35 @@ export default function Navbar() {
       pathname === path ? "text-[var(--primary)]" : "text-white"
     }`;
   return (
-    <div className=" flex justify-between  items-center px-32 py-4 bg-(--background)">
+    <div className=" flex justify-between  items-center pl-20 pr-10 py-4 bg-(--background)">
       <div>
-        <span className="text-2xl font-bold text-(--foreground) bg-(--primary) rounded-lg p-2">
-          MH
-        </span>
-        <Link href="/" className="text-(--foreground) text-2xl font-bold px-5">
+        <Link
+          href="/"
+          className="text-2xl font-bold text-(--foreground) bg-(--primary) rounded p-2"
+        >
           MovieHub
         </Link>
       </div>
-      <div className="flex gap-8 text-lg  text-(--foreground)">
-        <Link href="/streaming" className={linkClass("/streaming")}>
-          Streaming
-        </Link>
-        <Link href="/theatres" className={linkClass("/theaters")}>
-          In Theatres
-        </Link>
-      </div>
+
       <div className="flex gap-4">
         {loading ? (
           <div className="w-20" />
         ) : user ? (
-          <Link
-            href="/signin"
-            onClick={logout}
-            className="bg-(--primary) font-bold px-5 py-2 rounded"
-          >
-            Logout
-          </Link>
+          <>
+            <Link
+              href="/profile"
+              className="bg-(--primary) font-bold px-5 py-2 rounded"
+            >
+              <User className="w-6 h-6 text-(--foreground)" />
+            </Link>
+            <Link
+              href="/signin"
+              className="bg-(--background) px-5 py-2 rounded"
+              onClick={logout}
+            >
+              <LogOut className="w-6 h-6 text-(--accent)" />
+            </Link>
+          </>
         ) : (
           <>
             <Link

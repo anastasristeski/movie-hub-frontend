@@ -10,6 +10,7 @@ export default function MovieDetails({ movie, trailerKey }) {
           <div className="md:col-span-1">
             <div className="relative aspect-2/3 overflow-hidden rounded-lg shadow-2xl shadow-primary/30">
               <Image
+                sizes="(max-width: 768px) 100vw, 300px"
                 fill
                 src={movie.posterUrl}
                 alt={movie.title}

@@ -1,4 +1,4 @@
-import MovieDetails from "@/components/MovieDetails";
+import MovieDetails from "@/components/movie/MovieDetails";
 
 export default async function MoviePage({ params }) {
   const { id } = await params; // no await

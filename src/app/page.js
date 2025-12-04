@@ -1,6 +1,6 @@
 import Hero from "@/components/Hero";
 
-import TrendingRow from "@/components/TrendingRow";
+import TrendingRow from "@/components/movie/TrendingRow";
 
 async function fetchTrending(type) {
   const response = await fetch(`http://localhost:8080/api/trending/${type}`, {

@@ -11,6 +11,7 @@ export default function TrendingCard({ movie }) {
       <div className="group cursor-pointer min-w-44">
         <div className="relative h-64 overflow-hidden rounded-lg bg-card mb-3">
           <Image
+            sizes="(max-width: 768px) 100vw, 300px"
             src={movie.posterUrl}
             alt={movie.title}
             fill
