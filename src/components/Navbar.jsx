@@ -1,16 +1,17 @@
 "use client";
-import { isLoggedIn, logout } from "@/lib/api/auth";
+import { useAuth } from "@/app/context/AuthContext";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function Navbar() {
   const pathname = usePathname();
+  const { user, loading, logout } = useAuth();
   const linkClass = (path) =>
     `hover:text-[var(--primary)] transition font-semibold ${
       pathname === path ? "text-[var(--primary)]" : "text-white"
     }`;
   return (
-    <div className=" flex  justify-between  items-center px-32 py-4 bg-(--background)">
+    <div className=" flex justify-between  items-center px-32 py-4 bg-(--background)">
       <div>
         <span className="text-2xl font-bold text-(--foreground) bg-(--primary) rounded-lg p-2">
           MH
@@ -28,7 +29,9 @@ export default function Navbar() {
         </Link>
       </div>
       <div className="flex gap-4">
-        {isLoggedIn() ? (
+        {loading ? (
+          <div className="w-20" />
+        ) : user ? (
           <Link
             href="/signin"
             onClick={logout}

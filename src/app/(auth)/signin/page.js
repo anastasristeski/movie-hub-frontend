@@ -2,21 +2,37 @@
 import Link from "next/link";
 import { useState } from "react";
 import api from "@/lib/api/axios";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext.jsx";
+import { setAccessToken } from "@/lib/api/auth";
 export default function SignInPage() {
+  const router = useRouter();
+  const { setUser } = useAuth();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
     try {
       const response = await api.post("/auth/authenticate", {
         email,
         password,
       });
-      localStorage.setItem("access_token", response.data.token);
-      console.log("Login success", response.data);
-      window.location.href = "/";
+
+      const accessToken = response.data.token;
+      setAccessToken(response.data.token);
+      const meResponse = await api.get("/auth/me", {
+        withCredentials: true,
+      });
+      console.log("/ME/RESPONSE", meResponse.data);
+      setUser(meResponse.data);
+      router.push("/");
     } catch (error) {
-      console.log("Error", error.response?.data || error.message);
+      console.log(error);
+      setError("Invalid email or password");
     }
   };
   return (

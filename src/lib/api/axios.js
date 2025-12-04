@@ -1,5 +1,5 @@
 import axios from "axios";
-import { getAccessToken, setAccessToken } from "./auth";
+import { clearAccessToken, getAccessToken, setAccessToken } from "./auth";
 const api = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
   withCredentials: true,
@@ -25,7 +25,9 @@ api.interceptors.response.use(
         originalRequest.header.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
       } catch (refreshError) {
+        clearAccessToken();
         console.log("Refresh failed -> user must login again");
+        return Promise.reject(refreshError);
       }
     }
     return Promise.reject(error);

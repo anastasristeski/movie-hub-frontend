@@ -1,16 +1,34 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import api from "@/lib/api/axios";
 
 export default function RegisterPage() {
+  const router = useRouter();
+
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(firstName, lastName, email, password);
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    setError("");
+    try {
+      const reponse = await api.post("/auth/register", {
+        firstName,
+        lastName,
+        email,
+        password,
+      });
+      router.push("/signin");
+    } catch (error) {
+      console.log(error);
+      setError(error.reponse?.data || "Failed to create account");
+    }
   };
 
   return (
