@@ -13,20 +13,17 @@ export function AuthProvider({ children }) {
   useEffect(() => {
     async function loadUser() {
       try {
-        const refreshResponse = await api.post(
-          "/auth/refresh",
-          {},
-          { withCredentials: true }
-        );
-
-        if (refreshResponse.data?.token) {
-          setAccessToken(refreshResponse.data.token);
+        const refreshResponse = await api.post("/auth/refresh");
+        const newToken = refreshResponse.data?.token;
+        if (newToken) {
+          setAccessToken(newToken);
         } else {
           clearAccessToken();
           setUser(null);
           return;
         }
-        const meResponse = await api.get("/auth/me");
+
+        const meResponse = await api.get("/profile/me");
         setUser(meResponse.data);
       } catch (err) {
         clearAccessToken();

@@ -3,14 +3,16 @@ import Link from "next/link";
 import { Star, Play } from "lucide-react";
 
 export default function TrendingCard({ movie }) {
+  const ratingValue = movie.rating ?? movie.voteAverage;
   const rating =
-    movie.rating && movie.rating > 0 ? movie.rating.toFixed(1) : "N/A";
+    ratingValue && ratingValue > 0 ? ratingValue.toFixed(1) : "N/A";
 
   return (
     <Link href={`movies/${movie.tmdbId}`}>
       <div className="group cursor-pointer min-w-44">
         <div className="relative h-64 overflow-hidden rounded-lg bg-card mb-3">
           <Image
+            loading="eager"
             sizes="(max-width: 768px) 100vw, 300px"
             src={movie.posterUrl}
             alt={movie.title}

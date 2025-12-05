@@ -19,10 +19,10 @@ api.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const refreshResponse = await api.post("/api/auth/refresh");
+        const refreshResponse = await api.post("/auth/refresh");
         const newToken = refreshResponse.data.token;
         setAccessToken(newToken);
-        originalRequest.header.Authorization = `Bearer ${newToken}`;
+        originalRequest.headers.Authorization = `Bearer ${newToken}`;
         return api(originalRequest);
       } catch (refreshError) {
         clearAccessToken();

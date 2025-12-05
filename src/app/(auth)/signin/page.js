@@ -24,7 +24,7 @@ export default function SignInPage() {
 
       const accessToken = response.data.token;
       setAccessToken(response.data.token);
-      const meResponse = await api.get("/auth/me", {
+      const meResponse = await api.get("/profile/me", {
         withCredentials: true,
       });
       console.log("/ME/RESPONSE", meResponse.data);
