@@ -4,7 +4,7 @@ import { useState } from "react";
 
 export default function ChangePasswordModal({ onClose }) {
   const [formData, setFormData] = useState({
-    currentPassword: "",
+    oldPassword: "",
     newPassword: "",
     confirmPassword: "",
   });
@@ -24,17 +24,31 @@ export default function ChangePasswordModal({ onClose }) {
     const validateError = changePasswordValidate(formData);
     if (validateError) {
       setError(validateError);
+      setFormData({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
       setIsLoading(false);
       return;
     }
     try {
-      const response = await api.put("/profile/change-password", {
-        currentPassword: formData.currentPassword,
+      const response = await api.post("/profile/change-password", {
+        oldPassword: formData.oldPassword,
         newPassword: formData.newPassword,
       });
       onClose();
     } catch (error) {
-      console.error("Current password is incorrect");
+      const backendMessage =
+        error.response?.data?.message ||
+        error.response?.data?.error ||
+        "Something went wrong, please try again.";
+      setError(backendMessage);
+      setFormData({
+        oldPassword: "",
+        newPassword: "",
+        confirmPassword: "",
+      });
     } finally {
       setIsLoading(false);
     }
@@ -67,9 +81,9 @@ export default function ChangePasswordModal({ onClose }) {
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--muted-foreground)" />
               <input
                 type={showPasswords.current ? "text" : "password"}
-                value={formData.currentPassword}
+                value={formData.oldPassword}
                 onChange={(e) =>
-                  setFormData({ ...formData, currentPassword: e.target.value })
+                  setFormData({ ...formData, oldPassword: e.target.value })
                 }
                 className="w-full px-10 py-2 bg-(--background) border border-(--primary) rounded-lg text-(--foreground) focus:outline-none focus:border-(--primary)  transition"
               />
@@ -99,7 +113,7 @@ export default function ChangePasswordModal({ onClose }) {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--muted-foreground)" />
               <input
-                type={showPasswords.newPassword ? "text" : "password"}
+                type={showPasswords.new ? "text" : "password"}
                 value={formData.newPassword}
                 onChange={(e) =>
                   setFormData({ ...formData, newPassword: e.target.value })
@@ -111,12 +125,12 @@ export default function ChangePasswordModal({ onClose }) {
                 onClick={() =>
                   setShowPasswords({
                     ...showPasswords,
-                    newPassword: !showPasswords.newPassword,
+                    new: !showPasswords.new,
                   })
                 }
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition"
               >
-                {showPasswords.newPassword ? (
+                {showPasswords.new ? (
                   <EyeOff className="w-4 h-4" />
                 ) : (
                   <Eye className="w-4 h-4" />
@@ -131,7 +145,7 @@ export default function ChangePasswordModal({ onClose }) {
             <div className="relative">
               <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-(--muted-foreground)" />
               <input
-                type={showPasswords.confirmPassword ? "text" : "password"}
+                type={showPasswords.confirm ? "text" : "password"}
                 value={formData.confirmPassword}
                 onChange={(e) =>
                   setFormData({ ...formData, confirmPassword: e.target.value })
@@ -143,12 +157,12 @@ export default function ChangePasswordModal({ onClose }) {
                 onClick={() =>
                   setShowPasswords({
                     ...showPasswords,
-                    confirmPassword: !showPasswords.confirmPassword,
+                    confirm: !showPasswords.confirm,
                   })
                 }
                 className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground transition"
               >
-                {showPasswords.confirmPassword ? (
+                {showPasswords.confirm ? (
                   <EyeOff className="w-4 h-4" />
                 ) : (
                   <Eye className="w-4 h-4" />
@@ -180,7 +194,7 @@ export default function ChangePasswordModal({ onClose }) {
 
 function changePasswordValidate(formData) {
   if (
-    !formData.currentPassword ||
+    !formData.oldPassword ||
     !formData.newPassword ||
     !formData.confirmPassword
   ) {
