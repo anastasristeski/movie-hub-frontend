@@ -12,8 +12,10 @@ import { formatDate } from "@/lib/formatDate";
 import { useEffect, useState } from "react";
 import api from "@/lib/api/axios";
 import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/context/AuthContext";
 
 export default function MovieDetails({ movie, trailerKey }) {
+  const { user } = useAuth();
   const [isSaved, setIsSaved] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,6 +24,10 @@ export default function MovieDetails({ movie, trailerKey }) {
   const [embedUrl] = useState(`https://vidsrc.to/embed/movie/${movie.tmdbId}`);
   const router = useRouter();
   useEffect(() => {
+    if (!user) {
+      setIsSaved(false);
+      return;
+    }
     const checkSaved = async () => {
       try {
         const response = await api.get("/watch-later");
@@ -35,7 +41,7 @@ export default function MovieDetails({ movie, trailerKey }) {
       }
     };
     checkSaved();
-  }, [movie.tmdbId]);
+  }, [user, movie.tmdbId]);
   useEffect(() => {
     if (showPlayer) {
       history.pushState(null, "", location.href);
@@ -50,6 +56,7 @@ export default function MovieDetails({ movie, trailerKey }) {
   }, [showPlayer]);
 
   const handleAdd = async () => {
+    if (!user) return router.push("/signin");
     try {
       setIsLoading(true);
       await api.post(`/watch-later/${movie.tmdbId}`);
@@ -61,6 +68,7 @@ export default function MovieDetails({ movie, trailerKey }) {
     }
   };
   const handleRemove = async () => {
+    if (!user) return router.push("/login");
     try {
       setIsLoading(true);
       await api.delete(`/watch-later/${movie.tmdbId}`);
@@ -86,7 +94,10 @@ export default function MovieDetails({ movie, trailerKey }) {
               />
             </div>
             <button
-              onClick={() => setShowPlayer(true)}
+              onClick={() => {
+                if (!user) return router.push("/signin");
+                setShowPlayer(true);
+              }}
               className="w-full mt-3 py-3 bg-(--primary) hover:bg-(--primary)/70 text-(--primary-foreground) rounded-lg font-semibold transition flex items-center justify-center gap-2"
             >
               <Play />
