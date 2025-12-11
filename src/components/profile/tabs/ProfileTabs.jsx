@@ -31,7 +31,7 @@ export default function ProfileTabs() {
           );
         })}
       </div>
-      <div className="rounded- p-6">
+      <div className="rounded p-6">
         {activeTab === "watchlater" && <WatchLaterTab />}
       </div>
     </div>

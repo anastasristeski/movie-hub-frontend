@@ -1,6 +1,6 @@
 "use client";
 
-import TrendingRow from "@/components/movie/TrendingRow";
+import WatchLaterGrid from "@/components/movie/WatchLaterGrid";
 import api from "@/lib/api/axios";
 import { useEffect, useState } from "react";
 
@@ -12,7 +12,7 @@ export default function WatchLaterTab() {
   async function loadMovies() {
     try {
       setLoading(true);
-      const response = await api.get("/watchlater");
+      const response = await api.get("/watch-later");
       const mappedMovies = response.data.map((item) => item.movieResponse);
       setMovies(mappedMovies);
     } catch (error) {
@@ -25,7 +25,7 @@ export default function WatchLaterTab() {
   async function removeMovie(tmdbId) {
     setDeleteLoading(tmdbId);
     try {
-      await api.delete(`watchlater/${tmdbId}`);
+      await api.delete(`watch-later/${tmdbId}`);
       await loadMovies();
     } finally {
       setDeleteLoading(null);
@@ -39,8 +39,13 @@ export default function WatchLaterTab() {
   }, [movies]);
   return (
     <div>
-      {movies.length > 0 ? (
-        <TrendingRow movies={movies} />
+      {/* 1️⃣ Show loading FIRST */}
+      {loading ? (
+        <div className="flex justify-center py-20">
+          <div className="animate-spin rounded-full h-10 w-10 border-4 border-(--accent) border-t-transparent" />
+        </div>
+      ) : movies.length > 0 ? (
+        <WatchLaterGrid movies={movies} />
       ) : (
         <div className="text-center py-12">
           <p className="text-(--muted-foreground)">
