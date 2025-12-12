@@ -124,20 +124,22 @@ export default function MovieDetails({ movie, trailerKey }) {
               )}
             </button>
           </div>
-          <div className="md:col-span-2 space-y-6">
+          <div className="md:col-span-2 space-y-4">
             <h1 className="text-5xl font-bold mb-6">{movie.title}</h1>
-            <div className="md:col-span-2 flex flex-row gap-6">
-              <div className="space-y-6">
-                <div className="flex flex-wrap items-center gap-4 mb-4">
+            <div className="md:col-span-2 flex flex-col md:flex-row gap-12">
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 text-sm">
                   <Star className="w-5 h-5 fill-(--accent) text-(--accent)" />
                   <div className="flex flex-col">
                     <span className="text-sm text-(--muted-foreground)">
                       TMDB
                     </span>
-                    <span>{movie.voteAverage.toFixed(1)}/10</span>
+                    <span className="font-semibold">
+                      {movie.voteAverage.toFixed(1)}/10
+                    </span>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-sm">
                   <CalendarDays className="w-5 h-5 text-(--accent)" />
                   <div className="flex flex-col leading-tight">
                     <span className="text-sm text-(--muted-foreground)">
@@ -148,13 +150,21 @@ export default function MovieDetails({ movie, trailerKey }) {
                     </span>
                   </div>
                 </div>
-                <div className="flex gap-3 text-sm items-center">
+
+                <div className="flex items-center gap-2">
+                  <Clock className="w-5 h-5 text-(--accent)" />
+                  <div className="flex flex-col leading-tight text-sm">
+                    <span className=" text-(--muted-foreground)">Duration</span>
+                    <span className=" text-(--foreground) font-semibold">
+                      {movie.runtime}min
+                    </span>
+                  </div>
+                </div>
+                <div className="flex gap-2 text-sm items-center">
                   <Clapperboard className="w-5 h-5 text-(--accent)" />
                   <div className="flex flex-col">
-                    <span className="text-sm text-(--muted-foreground)">
-                      Genre
-                    </span>
-                    <div className="flex flex-row gap-2 font-semibold">
+                    <span className="text-(--muted-foreground)">Genre</span>
+                    <div className="grid gap-1 grid-flow-col auto-cols-max font-semibold">
                       {movie.genres
                         .flatMap((genre) => genre.split(","))
                         .map((genre) => (
@@ -204,7 +214,6 @@ export default function MovieDetails({ movie, trailerKey }) {
                 >
                   ✕
                 </button>
-
                 <div className="w-full max-w-5xl">
                   <div className="relative w-full aspect-video rounded-xl overflow-hidden shadow-2xl bg-black">
                     {!playerLoaded && (
