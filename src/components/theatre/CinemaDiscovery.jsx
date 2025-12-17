@@ -1,15 +1,18 @@
 "use client";
 import { useState } from "react";
 import CityExplorer from "./steps/CityExplorer";
-import { Building2, Clock, MapPin } from "lucide-react";
+import { Building2, Clock, CreditCard, MapPin, Ticket } from "lucide-react";
 import CinemaExplorer from "./steps/CinemaExplorer";
 import ShowTimeExplorer from "./steps/ShowTimeExplorer";
+import SeatExplorer from "./steps/SeatExplorer";
 
 export default function CinemaDiscovery() {
   const [step, setStep] = useState("cities");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedCinema, setSelectedCinema] = useState("");
-  const handleCitySelect = (city) => {
+  const [selectedShowtime, setSelectedShowtime] = useState("");
+  const [selectedSeats, setSelectedSeats] = useState("");
+  const handleSelectCity = (city) => {
     setSelectedCity(city);
     setStep("cinemas");
   };
@@ -17,12 +20,25 @@ export default function CinemaDiscovery() {
     setSelectedCinema(cinema);
     setStep("showtimes");
   };
+  const handleSelectShowtime = (showtime) => {
+    setSelectedShowtime(showtime);
+    setStep("seats");
+  };
+  const handleSelectCheckout = (seats) => {
+    setSelectedCinema(seats);
+    setStep("checkout");
+  };
   const handleBack = () => {
     if (step === "cinemas") {
       setSelectedCity("");
       setStep("cities");
     } else if (step === "showtimes") {
       setStep("cinemas");
+    } else if (step === "seats") {
+      setSelectedShowtime("");
+      setStep("showtimes");
+    } else if (step === "checkout") {
+      setStep("seats");
     }
   };
   return (
@@ -34,9 +50,13 @@ export default function CinemaDiscovery() {
         <p className="text-(--muted-foreground) mb-8">
           Discover movies playing near you
         </p>
-        <div className="flex items-center gap-4 text-sm mb-8 lg:gap-14">
+        <div
+          className="flex gap-4 text-sm mb-8
+    overflow-x-auto no-scrollbar whitespace-nowrap
+    lg:gap-14"
+        >
           <div
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
               step === "cities"
                 ? "bg-(--primary)/20 text-(--primary)"
                 : "text-(--muted-foreground)"
@@ -47,7 +67,7 @@ export default function CinemaDiscovery() {
           </div>
 
           <div
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
               step === "cinemas"
                 ? "bg-(--primary)/20 text-(--primary)"
                 : "text-(--muted-foreground)"
@@ -58,7 +78,7 @@ export default function CinemaDiscovery() {
           </div>
 
           <div
-            className={`flex items-center gap-2 px-3 py-2 rounded-lg ${
+            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
               step === "showtimes"
                 ? "bg-(--primary)/20 text-(--primary)"
                 : "text-(--muted-foreground)"
@@ -67,9 +87,30 @@ export default function CinemaDiscovery() {
             <Clock className="w-4 h-4" />
             <span className="font-semibold">Select Showtime</span>
           </div>
+
+          <div
+            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
+              step === "seats"
+                ? "bg-(--primary)/20 text-(--primary)"
+                : "text-(--muted-foreground)"
+            }`}
+          >
+            <Ticket className="w-4 h-4" />
+            <span className="font-semibold">Pick Seats</span>
+          </div>
+          <div
+            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
+              step === "checkout"
+                ? "bg-(--primary)/20 text-(--primary)"
+                : "text-(--muted-foreground)"
+            }`}
+          >
+            <CreditCard className="w-4 h-4" />
+            <span className="font-semibold">Checkout</span>
+          </div>
         </div>
       </div>
-      {step === "cities" && <CityExplorer onSelectCity={handleCitySelect} />}
+      {step === "cities" && <CityExplorer onSelectCity={handleSelectCity} />}
       {step === "cinemas" && (
         <CinemaExplorer
           city={selectedCity}
@@ -78,8 +119,20 @@ export default function CinemaDiscovery() {
         />
       )}
       {step === "showtimes" && (
-        <ShowTimeExplorer cinema={selectedCinema} onBack={handleBack} />
+        <ShowTimeExplorer
+          cinema={selectedCinema}
+          onBack={handleBack}
+          onSelectShowtime={handleSelectShowtime}
+        />
       )}
+      {step === "seats" && (
+        <SeatExplorer
+          showtime={selectedShowtime}
+          onBack={handleBack}
+          onSelectCheckout={handleSelectCheckout}
+        />
+      )}
+      {step === "checkout" && <div>sss</div>}
     </div>
   );
 }

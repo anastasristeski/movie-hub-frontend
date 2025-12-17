@@ -1,5 +1,9 @@
 import CinemaDiscovery from "@/components/theatre/CinemaDiscovery";
 
 export default function Theatres() {
-  return <CinemaDiscovery />;
+  return (
+    <main className="min-h-screen">
+      <CinemaDiscovery />
+    </main>
+  );
 }

@@ -1,10 +1,9 @@
 "use client";
 import api from "@/lib/api/axios";
 import { ChevronLeft, Clock, Ticket } from "lucide-react";
-import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 
-export default function ShowTimeExplorer({ cinema, onBack }) {
+export default function ShowTimeExplorer({ cinema, onBack, onSelectShowtime }) {
   const [showTimes, setShowTimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(
@@ -132,9 +131,9 @@ export default function ShowTimeExplorer({ cinema, onBack }) {
                 });
 
                 return (
-                  <Link
+                  <button
                     key={st.id}
-                    href={`/theatres/${st.id}`}
+                    onClick={() => onSelectShowtime(st)}
                     className="p-4 bg-card border border-(--border) hover:border-(--primary) hover:bg-(--primary)/5 rounded-lg transition text-center group"
                   >
                     <Clock className="w-5 h-5 text-(--accent) group-hover:text-(--primary) transition mx-auto mb-2" />
@@ -148,7 +147,7 @@ export default function ShowTimeExplorer({ cinema, onBack }) {
                       <Ticket className="w-3 h-3" />
                       {st.availableSeats} seats
                     </div>
-                  </Link>
+                  </button>
                 );
               })}
             </div>
