@@ -1,7 +1,8 @@
 "use client";
 import { useAuth } from "@/app/context/AuthContext";
-import ChangePasswordModal from "@/components/profile/ChangePassowrdModal";
-import EditProfileModal from "@/components/profile/EditProfileModal";
+import ChangePasswordModal from "@/components/auth/change-password-modal";
+import EditProfileModal from "@/components/auth/edit-profile-modal";
+
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileTabs from "@/components/profile/tabs/ProfileTabs";
 import { formatDate } from "@/lib/formatDate";

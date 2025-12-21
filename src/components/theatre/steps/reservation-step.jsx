@@ -1,6 +1,6 @@
 import { CheckCircle, Home } from "lucide-react";
 
-export default function ReservationSuccess({ onDone }) {
+export default function ReservationStep({ onDone }) {
   return (
     <div className="flex justify-center items-center py-16">
       <div className="max-w-md w-full bg-(--card) border border-(--border) rounded-2xl p-8 text-center shadow-lg">

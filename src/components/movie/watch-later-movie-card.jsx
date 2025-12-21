@@ -2,7 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { Star, Play } from "lucide-react";
 
-export default function MovieCardGrid({ movie }) {
+export default function WatchLaterMovieCard({ movie }) {
   const ratingValue = movie.rating ?? movie.voteAverage;
   const rating =
     ratingValue && ratingValue > 0 ? ratingValue.toFixed(1) : "N/A";

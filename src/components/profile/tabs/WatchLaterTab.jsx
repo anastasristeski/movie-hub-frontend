@@ -1,6 +1,6 @@
 "use client";
 
-import WatchLaterGrid from "@/components/movie/WatchLaterGrid";
+import WatchLaterGrid from "@/components/movie/watch-later-grid";
 import api from "@/lib/api/axios";
 import { useEffect, useState } from "react";
 

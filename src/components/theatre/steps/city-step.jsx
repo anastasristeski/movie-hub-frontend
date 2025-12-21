@@ -3,7 +3,7 @@ import api from "@/lib/api/axios";
 import { Building2, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
 
-export default function CityExplorer({ onSelectCity }) {
+export default function CityStep({ onSelectCity }) {
   const [cities, setCities] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {

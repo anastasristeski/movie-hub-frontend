@@ -25,9 +25,9 @@ export default function RegisterPage() {
         password,
       });
       router.push("/signin");
-    } catch (error) {
-      console.log(error);
-      setError(error.reponse?.data || "Failed to create account");
+    } catch (err) {
+      console.log(err);
+      setError(err.reponse?.data || "Failed to create account");
     }
   };
 
@@ -111,7 +111,6 @@ export default function RegisterPage() {
           </button>
         </form>
 
-        {/* Link */}
         <div className="mt-6 text-center text-sm">
           <p className="text-(--muted-foreground)">
             Already have an account?

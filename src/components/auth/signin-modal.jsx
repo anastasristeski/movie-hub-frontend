@@ -1,5 +1,5 @@
 import { X } from "lucide-react";
-import SignInForm from "./SignInForm";
+import SignInForm from "./signin-form";
 
 export default function SignInModal({ onClose }) {
   return (
@@ -11,7 +11,6 @@ export default function SignInModal({ onClose }) {
             <X className="w-5 h-5" />
           </button>
         </div>
-
         <SignInForm onSuccess={onClose} />
       </div>
     </div>

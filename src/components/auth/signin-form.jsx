@@ -25,13 +25,10 @@ export default function SignInForm({ onSuccess }) {
         email,
         password,
       });
-
-      const accessToken = response.data.token;
       setAccessToken(response.data.token);
       const meResponse = await api.get("/profile/me", {
         withCredentials: true,
       });
-      console.log("/ME/RESPONSE", meResponse.data);
       setUser(meResponse.data);
       if (onSuccess) {
         onSuccess();

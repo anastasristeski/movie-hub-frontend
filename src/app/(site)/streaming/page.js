@@ -1,6 +1,6 @@
 "use client";
 
-import StreamingGrid from "@/components/movie/StreamingGrid";
+import StreamingMoviesGrid from "@/components/movie/streaming-movies-grid";
 import api from "@/lib/api/axios";
 import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
@@ -125,9 +125,8 @@ export default function StreamingPage() {
           </p>
         </div>
 
-        <StreamingGrid movies={movies} />
+        <StreamingMoviesGrid movies={movies} />
 
-        {/* Pagination only visible when NOT searching */}
         {!isSearchMode && (
           <div className="flex justify-center gap-2 mt-10">
             <button

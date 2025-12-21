@@ -3,7 +3,7 @@ import api from "@/lib/api/axios";
 import { ChevronLeft, Clock, Ticket } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-export default function ShowTimeExplorer({ cinema, onBack, onSelectShowtime }) {
+export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
   const [showTimes, setShowTimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(

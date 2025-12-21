@@ -1,6 +1,6 @@
 "use client";
 import { useLoading } from "@/app/context/LoadingContext";
-import MovieDetails from "@/components/movie/MovieDetails";
+import MovieDetails from "@/components/movie/movie-details";
 import api from "@/lib/api/axios";
 import { use, useEffect, useState } from "react";
 

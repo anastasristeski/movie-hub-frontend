@@ -3,7 +3,7 @@ import { formatShowtime } from "@/lib/formatDate";
 import { Check, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
-export default function CheckoutExplorer({ booking, onBack, onSuccess }) {
+export default function CheckoutStep({ booking, onBack, onSuccess }) {
   const { city, cinema, showtime, seats } = booking;
   const total = seats.length * booking.showtime.pricePerSeat;
   const [loading, setLoading] = useState(false);

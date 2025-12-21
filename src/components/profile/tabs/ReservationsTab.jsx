@@ -10,7 +10,6 @@ export default function ReservationsTab() {
     try {
       setLoading(true);
       const response = await api.get("/reservation/me");
-      console.log("RESERVATIONS RESPONSE", response.data);
       setReservations(response.data);
     } catch (error) {
       console.error("Failed to fetch reservations", error);

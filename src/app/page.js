@@ -1,6 +1,6 @@
-import Hero from "@/components/Hero";
+import Hero from "@/components/hero";
 
-import TrendingRow from "@/components/movie/TrendingRow";
+import TrendingMoviesRow from "@/components/movie/trending-movies-row";
 
 async function fetchTrending(type) {
   const response = await fetch(`http://localhost:8080/api/trending/${type}`, {
@@ -17,8 +17,8 @@ export default async function Home() {
   return (
     <main>
       <Hero />
-      <TrendingRow title="Trending Today" movies={day} />
-      <TrendingRow title="Trending this week" movies={week} />
+      <TrendingMoviesRow title="Trending Today" movies={day} />
+      <TrendingMoviesRow title="Trending this week" movies={week} />
     </main>
   );
 }

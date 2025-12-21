@@ -3,7 +3,7 @@ import api from "@/lib/api/axios";
 import { Armchair, ChevronLeft, Euro } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
 
-export default function SeatExplorer({ showtime, onBack, onSelectCheckout }) {
+export default function SeatStep({ showtime, onBack, onSelectCheckout }) {
   const [allSeats, setAllSeats] = useState([]);
   const [takenSeats, setTakenSeats] = useState([]);
   const [selectedSeats, setSelectedSeats] = useState([]);
