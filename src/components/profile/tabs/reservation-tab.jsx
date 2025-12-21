@@ -1,5 +1,5 @@
 "use client";
-import ReservationCard from "@/components/reservation/ReservationCard";
+import ReservationCard from "@/components/reservation/reservation-card";
 import api from "@/lib/api/axios";
 import { useEffect, useState } from "react";
 

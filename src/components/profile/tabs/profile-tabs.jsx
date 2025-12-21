@@ -1,8 +1,8 @@
 "use client";
 import { useState } from "react";
 import { Bookmark, Ticket, Clock, History } from "lucide-react";
-import WatchLaterTab from "./WatchLaterTab";
-import ReservationsTab from "./ReservationsTab";
+import WatchLaterTab from "./watch-later-tab";
+import ReservationsTab from "./reservation-tab";
 const tabs = [
   { id: "watchlater", label: "Watch Later", icon: Bookmark },
   { id: "reservations", label: "Active Reservations", icon: Ticket },
