@@ -1,46 +1,123 @@
 "use client";
-import { useState } from "react";
+import { useReducer, useState } from "react";
 import CityExplorer from "./steps/CityExplorer";
-import { Building2, Clock, CreditCard, MapPin, Ticket } from "lucide-react";
+import {
+  Armchair,
+  Building2,
+  Clock,
+  CreditCard,
+  MapPin,
+  Ticket,
+} from "lucide-react";
 import CinemaExplorer from "./steps/CinemaExplorer";
 import ShowTimeExplorer from "./steps/ShowTimeExplorer";
 import SeatExplorer from "./steps/SeatExplorer";
+import CheckoutExplorer from "./steps/CheckoutExplorer";
+import Step from "./steps/Step";
 
 export default function CinemaDiscovery() {
-  const [step, setStep] = useState("cities");
-  const [selectedCity, setSelectedCity] = useState("");
-  const [selectedCinema, setSelectedCinema] = useState("");
-  const [selectedShowtime, setSelectedShowtime] = useState("");
-  const [selectedSeats, setSelectedSeats] = useState("");
-  const handleSelectCity = (city) => {
-    setSelectedCity(city);
-    setStep("cinemas");
+  const initialState = {
+    step: "cities",
+    city: null,
+    cinema: null,
+    showtime: null,
+    seats: [],
   };
-  const handleSelectCinema = (cinema) => {
-    setSelectedCinema(cinema);
-    setStep("showtimes");
-  };
-  const handleSelectShowtime = (showtime) => {
-    setSelectedShowtime(showtime);
-    setStep("seats");
-  };
-  const handleSelectCheckout = (seats) => {
-    setSelectedCinema(seats);
-    setStep("checkout");
-  };
-  const handleBack = () => {
-    if (step === "cinemas") {
-      setSelectedCity("");
-      setStep("cities");
-    } else if (step === "showtimes") {
-      setStep("cinemas");
-    } else if (step === "seats") {
-      setSelectedShowtime("");
-      setStep("showtimes");
-    } else if (step === "checkout") {
-      setStep("seats");
+  function bookingReducer(state, action) {
+    switch (action.type) {
+      case "CITY_SELECTED":
+        return {
+          ...state,
+          city: action.payload,
+          step: "cinemas",
+        };
+      case "CINEMA_SELECTED":
+        return {
+          ...state,
+          cinema: action.payload,
+          step: "showtimes",
+        };
+      case "SHOWTIME_SELECTED":
+        return {
+          ...state,
+          showtime: action.payload,
+          step: "seats",
+        };
+      case "SEATS_SELECTED":
+        return {
+          ...state,
+          seats: action.payload,
+          step: "checkout",
+        };
+      case "BACK":
+        switch (state.step) {
+          case "cinemas":
+            return { ...state, city: null, step: "cities" };
+          case "showtimes":
+            return { ...state, cinema: null, step: "cinemas" };
+
+          case "seats":
+            return { ...state, showtime: null, step: "showtimes" };
+          case "checkout":
+            return { ...state, step: "seats" };
+
+          default:
+            return state;
+        }
+      default:
+        return state;
+    }
+  }
+  const [booking, dispatch] = useReducer(bookingReducer, initialState);
+  const handleBack = () => dispatch({ type: "BACK" });
+
+  const renderStep = () => {
+    switch (booking.step) {
+      case "cities":
+        return (
+          <CityExplorer
+            onSelectCity={(city) =>
+              dispatch({ type: "CITY_SELECTED", payload: city })
+            }
+          />
+        );
+      case "cinemas":
+        return (
+          <CinemaExplorer
+            city={booking.city}
+            onSelectCinema={(cinema) =>
+              dispatch({ type: "CINEMA_SELECTED", payload: cinema })
+            }
+            onBack={handleBack}
+          />
+        );
+      case "showtimes":
+        return (
+          <ShowTimeExplorer
+            cinema={booking.cinema}
+            onSelectShowtime={(showtime) =>
+              dispatch({ type: "SHOWTIME_SELECTED", payload: showtime })
+            }
+            onBack={handleBack}
+          />
+        );
+      case "seats":
+        return (
+          <SeatExplorer
+            showtime={booking.showtime}
+            onSelectCheckout={(seats) =>
+              dispatch({ type: "SEATS_SELECTED", payload: seats })
+            }
+            onBack={handleBack}
+          />
+        );
+      case "checkout":
+        return <CheckoutExplorer booking={booking} onBack={handleBack} />;
+      default:
+        return null;
     }
   };
+
   return (
     <div className="min-h-screen max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="mb-12">
@@ -50,89 +127,37 @@ export default function CinemaDiscovery() {
         <p className="text-(--muted-foreground) mb-8">
           Discover movies playing near you
         </p>
-        <div
-          className="flex gap-4 text-sm mb-8
-    overflow-x-auto no-scrollbar whitespace-nowrap
-    lg:gap-14"
-        >
-          <div
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
-              step === "cities"
-                ? "bg-(--primary)/20 text-(--primary)"
-                : "text-(--muted-foreground)"
-            }`}
-          >
-            <MapPin className="w-4 h-4" />
-            <span className="font-semibold">Select City</span>
-          </div>
 
-          <div
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
-              step === "cinemas"
-                ? "bg-(--primary)/20 text-(--primary)"
-                : "text-(--muted-foreground)"
-            }`}
-          >
-            <Building2 className="w-4 h-4" />
-            <span className="font-semibold">Select Cinema</span>
-          </div>
-
-          <div
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
-              step === "showtimes"
-                ? "bg-(--primary)/20 text-(--primary)"
-                : "text-(--muted-foreground)"
-            }`}
-          >
-            <Clock className="w-4 h-4" />
-            <span className="font-semibold">Select Showtime</span>
-          </div>
-
-          <div
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
-              step === "seats"
-                ? "bg-(--primary)/20 text-(--primary)"
-                : "text-(--muted-foreground)"
-            }`}
-          >
-            <Ticket className="w-4 h-4" />
-            <span className="font-semibold">Pick Seats</span>
-          </div>
-          <div
-            className={`shrink-0 flex items-center gap-2 px-3 py-2 rounded-lg ${
-              step === "checkout"
-                ? "bg-(--primary)/20 text-(--primary)"
-                : "text-(--muted-foreground)"
-            }`}
-          >
-            <CreditCard className="w-4 h-4" />
-            <span className="font-semibold">Checkout</span>
-          </div>
+        <div className="flex gap-4 text-sm mb-8 overflow-x-auto no-scrollbar whitespace-nowrap lg:gap-14">
+          <Step
+            active={booking.step === "cities"}
+            icon={MapPin}
+            label="Select City"
+          />
+          <Step
+            active={booking.step === "cinemas"}
+            icon={Building2}
+            label="Select Cinema"
+          />
+          <Step
+            active={booking.step === "showtimes"}
+            icon={Clock}
+            label="Select Showtime"
+          />
+          <Step
+            active={booking.step === "seats"}
+            icon={Armchair}
+            label="Select Seats"
+          />
+          <Step
+            active={booking.step === "checkout"}
+            icon={CreditCard}
+            label="Checkout"
+          />
         </div>
       </div>
-      {step === "cities" && <CityExplorer onSelectCity={handleSelectCity} />}
-      {step === "cinemas" && (
-        <CinemaExplorer
-          city={selectedCity}
-          onSelectCinema={handleSelectCinema}
-          onBack={handleBack}
-        />
-      )}
-      {step === "showtimes" && (
-        <ShowTimeExplorer
-          cinema={selectedCinema}
-          onBack={handleBack}
-          onSelectShowtime={handleSelectShowtime}
-        />
-      )}
-      {step === "seats" && (
-        <SeatExplorer
-          showtime={selectedShowtime}
-          onBack={handleBack}
-          onSelectCheckout={handleSelectCheckout}
-        />
-      )}
-      {step === "checkout" && <div>sss</div>}
+
+      {renderStep()}
     </div>
   );
 }

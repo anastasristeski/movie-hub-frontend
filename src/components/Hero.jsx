@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 export default function Hero() {
   return (
     <section className="pt-32 pb-20 px-6 text-center relative overflow-hidden">
@@ -12,12 +14,12 @@ export default function Hero() {
       </p>
 
       <div className="flex justify-center gap-6">
-        <a
+        <Link
           href="/streaming"
           className="bg-(--primary) text-white px-6 py-3 rounded-lg font-semibold hover:bg-(--accent) transition"
         >
           Browse Streaming
-        </a>
+        </Link>
 
         <a
           href="/theatres"

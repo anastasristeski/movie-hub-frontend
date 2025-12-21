@@ -126,7 +126,7 @@ export default function SeatExplorer({ showtime, onBack, onSelectCheckout }) {
           </span>
         </div>
         {selectedSeats.length > 0 && (
-          <div className="flex flex-wrap gap-2">
+          <div className="flex flex-wrap gap-2 mb-3">
             {selectedSeats.sort().map((seat) => (
               <span
                 key={seat}

@@ -78,4 +78,3 @@ export default function CinemaExplorer({ city, onSelectCinema, onBack }) {
     </div>
   );
 }
-//TRANSITION

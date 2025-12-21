@@ -11,7 +11,7 @@ export default function Navbar() {
       pathname === path ? "text-[var(--primary)]" : "text-white"
     }`;
   return (
-    <div className=" flex justify-between  items-center pl-20 pr-10 py-4 bg-(--background)">
+    <div className=" flex justify-between  items-center pl-20 pr-10 py-4 bg-(--background)/80 border-b border-(--border)">
       <div>
         <Link
           href="/"
