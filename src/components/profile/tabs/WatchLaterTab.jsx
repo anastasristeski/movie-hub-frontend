@@ -13,6 +13,7 @@ export default function WatchLaterTab() {
     try {
       setLoading(true);
       const response = await api.get("/watch-later");
+
       const mappedMovies = response.data.map((item) => item.movieResponse);
       setMovies(mappedMovies);
     } catch (error) {

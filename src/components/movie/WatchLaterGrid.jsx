@@ -1,6 +1,3 @@
-"use client";
-
-import MovieCard from "./MovieCard";
 import MovieCardGrid from "./MovieGridCard";
 
 export default function WatchLaterGrid({ movies }) {

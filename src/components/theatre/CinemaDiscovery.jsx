@@ -14,6 +14,7 @@ import ShowTimeExplorer from "./steps/ShowTimeExplorer";
 import SeatExplorer from "./steps/SeatExplorer";
 import CheckoutExplorer from "./steps/CheckoutExplorer";
 import Step from "./steps/Step";
+import ReservationSuccess from "./steps/ReservationSuccess";
 
 export default function CinemaDiscovery() {
   const initialState = {
@@ -22,6 +23,7 @@ export default function CinemaDiscovery() {
     cinema: null,
     showtime: null,
     seats: [],
+    reservation: null,
   };
   function bookingReducer(state, action) {
     switch (action.type) {
@@ -49,6 +51,14 @@ export default function CinemaDiscovery() {
           seats: action.payload,
           step: "checkout",
         };
+      case "RESERVATION_SUCCESS":
+        return {
+          ...state,
+          reservation: action.payload,
+          step: "success",
+        };
+      case "RESET":
+        return initialState;
       case "BACK":
         switch (state.step) {
           case "cinemas":
@@ -70,7 +80,12 @@ export default function CinemaDiscovery() {
   }
   const [booking, dispatch] = useReducer(bookingReducer, initialState);
   const handleBack = () => dispatch({ type: "BACK" });
-
+  const handleReservationSuccess = (reservation) => {
+    dispatch({
+      type: "RESERVATION_SUCCESS",
+      payload: reservation,
+    });
+  };
   const renderStep = () => {
     switch (booking.step) {
       case "cities":
@@ -112,7 +127,20 @@ export default function CinemaDiscovery() {
           />
         );
       case "checkout":
-        return <CheckoutExplorer booking={booking} onBack={handleBack} />;
+        return (
+          <CheckoutExplorer
+            booking={booking}
+            onBack={handleBack}
+            onSuccess={handleReservationSuccess}
+          />
+        );
+      case "success":
+        return (
+          <ReservationSuccess
+            reservation={booking.reservation}
+            onDone={() => dispatch({ type: "RESET" })}
+          />
+        );
       default:
         return null;
     }

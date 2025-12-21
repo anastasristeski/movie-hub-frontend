@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { Star, Play } from "lucide-react";
@@ -15,6 +13,9 @@ export default function MovieCardGrid({ movie }) {
         <div className="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-card mb-3">
           <Image
             fill
+            sizes="(max-width: 640px) 50vw,
+         (max-width: 1024px) 25vw,
+         200px"
             src={movie.posterUrl}
             alt={movie.title}
             className="object-cover transition duration-300 group-hover:scale-105"

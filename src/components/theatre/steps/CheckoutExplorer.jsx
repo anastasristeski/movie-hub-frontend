@@ -1,27 +1,37 @@
+import api from "@/lib/api/axios";
+import { formatShowtime } from "@/lib/formatDate";
 import { Check, ChevronLeft } from "lucide-react";
+import { useState } from "react";
 
-export default function CheckoutExplorer({ booking, onBack }) {
+export default function CheckoutExplorer({ booking, onBack, onSuccess }) {
   const { city, cinema, showtime, seats } = booking;
   const total = seats.length * booking.showtime.pricePerSeat;
-
+  const [loading, setLoading] = useState(false);
   console.log("BOOKING OBJECT", booking);
-  const formatShowtime = (iso) => {
-    const date = new Date(iso);
 
-    const day = date.toLocaleDateString(undefined, {
-      weekday: "short",
-      day: "2-digit",
-      month: "short",
-    });
-
-    const time = date.toLocaleTimeString(undefined, {
-      hour: "2-digit",
-      minute: "2-digit",
-    });
-
-    return `${day} · ${time}`;
+  const handleConfirm = async () => {
+    try {
+      setLoading(true);
+      const response = await api.post(`/reservation/${showtime.id}`, {
+        seats: booking.seats,
+      });
+      onSuccess(response.data);
+    } catch (error) {
+      if (error.response?.status === 400) {
+        alert(error.resposnse.data.message);
+        onBack();
+      }
+    } finally {
+      setLoading(false);
+    }
   };
-
+  if (loading) {
+    return (
+      <div className="flex justify-center py-20">
+        <div className="animate-spin rounded-full h-10 w-10 border-4 border-(--accent) border-t-transparent" />
+      </div>
+    );
+  }
   return (
     <div>
       <button
@@ -97,7 +107,10 @@ export default function CheckoutExplorer({ booking, onBack }) {
           </div>
         </div>
 
-        <button className="w-full py-3 bg-(--primary) hover:bg-(--primary)/90 text-(--primary-foreground) rounded-lg font-semibold transition flex items-center justify-center gap-2">
+        <button
+          onClick={handleConfirm}
+          className="w-full py-3 bg-(--primary) hover:bg-(--primary)/90 text-(--primary-foreground) rounded-lg font-semibold transition flex items-center justify-center gap-2"
+        >
           <Check className="w-5 h-5" />
           Confirm & Pay
         </button>

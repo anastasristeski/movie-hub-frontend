@@ -133,7 +133,7 @@ export default function StreamingPage() {
             <button
               onClick={() => setPage((p) => Math.max(0, p - 1))}
               disabled={page === 0}
-              className="px-5 py-2 rounded bg-zinc-800 disabled:opacity-40"
+              className="px-5 py-2 rounded bg-(--border) disabled:opacity-40"
             >
               Prev
             </button>
@@ -150,7 +150,7 @@ export default function StreamingPage() {
                   className={`px-3 py-2 rounded ${
                     p === page
                       ? "bg-(--primary) text-black font-bold"
-                      : "bg-zinc-800 hover:bg-zinc-700"
+                      : "bg-(--border) hover:bg-zinc-700"
                   }`}
                 >
                   {p + 1}
@@ -161,7 +161,7 @@ export default function StreamingPage() {
             <button
               onClick={() => setPage((p) => (p + 1 < totalPages ? p + 1 : p))}
               disabled={page + 1 >= totalPages}
-              className="px-5 py-2 rounded bg-zinc-800 disabled:opacity-40"
+              className="px-5 py-2 rounded bg-(--border) disabled:opacity-40"
             >
               Next
             </button>

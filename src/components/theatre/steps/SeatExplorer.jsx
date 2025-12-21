@@ -74,8 +74,8 @@ export default function SeatExplorer({ showtime, onBack, onSelectCheckout }) {
           <span className="text-(--muted-foreground)">Available</span>
         </div>
 
-        <div className="flex items-center gap-2">
-          <Armchair className="w-5 h-5 text-(--background) " />
+        <div className="flex items-center gap-2 ">
+          <Armchair className="w-5 h-5 bg-(--muted-foreground) rounded text-(--accent) " />
           <span className="text-(--muted-foreground)">Booked</span>
         </div>
       </div>
@@ -100,7 +100,7 @@ export default function SeatExplorer({ showtime, onBack, onSelectCheckout }) {
                     className={`w-9 h-9 md:w-18 md:h-18 rounded-xl text-xs font-bold transition flex items-center justify-center
                       ${
                         taken
-                          ? "bg-red-500/60 cursor-not-allowed"
+                          ? "bg-(--muted-foreground)/60 cursor-not-allowed "
                           : selected
                           ? "bg-(--primary) text-(--primary-foreground)"
                           : "bg-(--card) border border-(--border) hover:border-(--primary)"

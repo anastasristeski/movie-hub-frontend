@@ -4,16 +4,17 @@ import ChangePasswordModal from "@/components/profile/ChangePassowrdModal";
 import EditProfileModal from "@/components/profile/EditProfileModal";
 import ProfileHeader from "@/components/profile/ProfileHeader";
 import ProfileTabs from "@/components/profile/tabs/ProfileTabs";
-import WatchLaterTab from "@/components/profile/tabs/WatchLaterTab";
 import { formatDate } from "@/lib/formatDate";
 import { Calendar, Key, Mail, User } from "lucide-react";
+
 import { useState } from "react";
 export default function Profile() {
   const { user, loading } = useAuth();
-  const [activeTab, setActiveTab] = useState("watchLater");
+
   const [showEditModal, setShowEditModal] = useState(false);
   const [showPasswordModal, setShowPasswordModal] = useState(false);
   console.log("USER", user);
+
   if (loading) {
     return (
       <div className="min-h-[60vh] flex items-center justify-center">
@@ -22,11 +23,11 @@ export default function Profile() {
     );
   }
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12">
+    <main className="max-w-6xl mx-auto px-4 py-12 ">
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         <div className="lg:col-span-1">
           <ProfileHeader user={user} />
-          <div className="mt-8 space-y-3">
+          <div className="mt-8 space-y-3 ">
             <button
               onClick={() => setShowEditModal(true)}
               className="w-full py-2 px-4 bg-(--primary)/90 hover:bg-(--primary)/90 text-(--primary-foreground) rounded-lg font-semibold transition flex items-center justify-center gap-2"

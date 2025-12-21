@@ -2,14 +2,14 @@
 import { useState } from "react";
 import { Bookmark, Ticket, Clock, History } from "lucide-react";
 import WatchLaterTab from "./WatchLaterTab";
+import ReservationsTab from "./ReservationsTab";
 const tabs = [
   { id: "watchlater", label: "Watch Later", icon: Bookmark },
-  { id: "history", label: "History", icon: History },
   { id: "reservations", label: "Active Reservations", icon: Ticket },
   { id: "history-reservations", label: "Reservation History", icon: Clock },
 ];
 export default function ProfileTabs() {
-  const [activeTab, setActiveTab] = useState("watchlater");
+  const [activeTab, setActiveTab] = useState("reservations");
   return (
     <div>
       <div className="flex gap-2 mb-2 overflow-x-auto pb-2 no-scrollbar">
@@ -33,6 +33,7 @@ export default function ProfileTabs() {
       </div>
       <div className="rounded p-6">
         {activeTab === "watchlater" && <WatchLaterTab />}
+        {activeTab === "reservations" && <ReservationsTab />}
       </div>
     </div>
   );
