@@ -98,12 +98,14 @@ export default function CheckoutStep({ booking, onBack, onSuccess }) {
         <div className="bg-(--primary)/10 border border-(--primary)/30 rounded-lg p-6 space-y-3">
           <div className="flex justify-between items-center">
             <span className="text-(--muted-foreground)">Ticket Price x 1</span>
-            <span className="text-(--foreground)">{showtime.pricePerSeat}</span>
+            <span className="text-(--foreground)">
+              €{showtime.pricePerSeat}
+            </span>
           </div>
 
           <div className="flex justify-between items-center text-lg font-bold">
             <span className="text-(--foreground)">Total Amount</span>
-            <span className="text-(--accent)">{total}</span>
+            <span className="text-(--accent)">€{total}</span>
           </div>
         </div>
 
