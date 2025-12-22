@@ -1,6 +1,9 @@
 "use client";
 import api from "@/lib/api/axios";
-import { ChevronLeft, Clock, Ticket } from "lucide-react";
+
+import { formatRuntime } from "@/lib/formatRuntime";
+import { ChevronLeft, Clock, Star, Ticket } from "lucide-react";
+import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 
 export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
@@ -113,17 +116,64 @@ export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
         {Object.values(movies).map(({ movie, showtimes }) => (
           <div
             key={movie.tmdbId}
-            className="bg-(--background) border border-(--border) rounded-lg p-6"
+            className="bg-(--background) border border-(--border) rounded-lg p-6 overflow-hidden"
           >
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <h3 className="text-xl font-bold text-(--foreground)">
-                  {movie.title}
-                </h3>
+            <div className="flex flex-col md:flex-row gap-6 p-6 border-b border-(--border)">
+              <div className="shrink-0">
+                <div className="relative aspect-2/3 md:w-32 rounded-lg overflow-hidden border border-(--border)">
+                  <Image
+                    src={movie.backdropUrl}
+                    alt={movie.title}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 384px"
+                    className="object-cover"
+                  />
+                </div>
+              </div>
+              <div className="flex-1">
+                <div className="flex items-start justify-between mb-3">
+                  <div>
+                    <h3 className="text-2xl font-bold text-(--foreground) mb-2">
+                      {movie.title}
+                    </h3>
+                    <div className="flex items-center gap-3 text-sm text-(--muted-foreground) flex-wrap">
+                      <span>{formatRuntime(movie.runtime)}</span>
+                      <span>
+                        <div className="flex flex-wrap gap-2">
+                          {movie.genres
+                            .flatMap((g) => g.split(","))
+                            .map((g) => g.trim())
+                            .filter(Boolean)
+                            .map((genre) => (
+                              <span
+                                key={genre}
+                                className="px-2 py-1 text-sm font-semibold rounded bg-(--primary)/10 text-(--primary)"
+                              >
+                                {genre}
+                              </span>
+                            ))}
+                        </div>
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-1 bg-(--primary)/10 px-3 py-2 rounded-lg">
+                    <Star className="w-5 h-5 text-(--primary) fill-(--primary)" />
+                    <span className="text-lg font-bold text-(--primary)">
+                      {movie.voteAverage !== 0
+                        ? `${movie.voteAverage.toFixed(1)}`
+                        : "N/A"}
+                    </span>
+                  </div>
+                </div>
+                <p className="text-(--muted-foreground) text-sm leading-relaxed line-clamp-3">
+                  {movie.overview}
+                </p>
               </div>
             </div>
-
-            <div className="grid grid-cols-[repeat(auto-fit,minmax(110px,1fr))] gap-3 justify-start">
+            <p className="text-sm font-semibold text-(--muted-foreground) px-6 py-4">
+              Available Showtimes
+            </p>
+            <div className="grid grid-cols-[repeat(auto-fit,minmax(110px,1fr))] gap-3 justify-start ">
               {showtimes.map((st) => {
                 const time = new Date(st.startTime).toLocaleTimeString([], {
                   hour: "2-digit",

@@ -13,6 +13,7 @@ import { useEffect, useState } from "react";
 import api from "@/lib/api/axios";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/context/AuthContext";
+import { formatRuntime } from "@/lib/formatRuntime";
 
 export default function MovieDetails({ movie, trailerKey }) {
   const { user } = useAuth();
@@ -156,7 +157,7 @@ export default function MovieDetails({ movie, trailerKey }) {
                   <div className="flex flex-col leading-tight text-sm">
                     <span className=" text-(--muted-foreground)">Duration</span>
                     <span className=" text-(--foreground) font-semibold">
-                      {movie.runtime}min
+                      {formatRuntime(movie.runtime)}
                     </span>
                   </div>
                 </div>

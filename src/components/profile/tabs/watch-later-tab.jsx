@@ -45,7 +45,7 @@ export default function WatchLaterTab() {
           <div className="animate-spin rounded-full h-10 w-10 border-4 border-(--accent) border-t-transparent" />
         </div>
       ) : movies.length > 0 ? (
-        <WatchLaterGrid movies={movies} />
+        <WatchLaterGrid movies={movies} onRemove={removeMovie} />
       ) : (
         <div className="text-center py-12">
           <p className="text-(--muted-foreground)">

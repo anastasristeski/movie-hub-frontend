@@ -1,16 +1,30 @@
 import Image from "next/image";
 import Link from "next/link";
-import { Star, Play } from "lucide-react";
+import { Star, Play, Trash2 } from "lucide-react";
 
-export default function WatchLaterMovieCard({ movie }) {
+export default function WatchLaterMovieCard({ movie, onRemove }) {
   const ratingValue = movie.rating ?? movie.voteAverage;
   const rating =
     ratingValue && ratingValue > 0 ? ratingValue.toFixed(1) : "N/A";
+  console.log("WatchLaterMovieCard render", {
+    title: movie?.title,
+    onRemoveType: typeof onRemove,
+  });
 
   return (
     <Link href={`/streaming/${movie.tmdbId}`}>
       <div className="group cursor-pointer">
         <div className="relative w-full aspect-2/3 overflow-hidden rounded-lg bg-card mb-3">
+          <button
+            onClick={(e) => {
+              e.preventDefault();
+              e.stopPropagation();
+              onRemove(movie.tmdbId);
+            }}
+            className="absolute bottom-2 right-2 z-10 p-2 bg-black/60 rounded-lg hover:bg-(--destructive) text-white transition"
+          >
+            <Trash2 className="w-4 h-4" />
+          </button>
           <Image
             fill
             sizes="(max-width: 640px) 50vw,
