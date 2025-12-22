@@ -21,7 +21,7 @@ export default function WatchLaterMovieCard({ movie, onRemove }) {
               e.stopPropagation();
               onRemove(movie.tmdbId);
             }}
-            className="absolute bottom-2 right-2 z-10 p-2 bg-black/60 rounded-lg hover:bg-(--destructive) text-white transition"
+            className="absolute bottom-1 right-1 z-10 p-2 bg-black/60 rounded-lg hover:bg-(--destructive) text-(--muted-foreground) transition"
           >
             <Trash2 className="w-4 h-4" />
           </button>
