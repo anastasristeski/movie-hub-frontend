@@ -24,6 +24,7 @@ export default function Theater() {
     showtime: null,
     seats: [],
     reservation: null,
+    reservationStatus: null,
   };
   function bookingReducer(state, action) {
     switch (action.type) {
@@ -55,12 +56,27 @@ export default function Theater() {
         return {
           ...state,
           reservation: action.payload,
-          step: "success",
+          reservationStatus: "success",
+          step: "result",
+        };
+
+      case "RESERVATION_FAILED":
+        return {
+          ...state,
+          reservation: action.payload,
+          reservationStatus: "failed",
+          step: "result",
         };
       case "RESET":
         return initialState;
+
       case "BACK":
         switch (state.step) {
+          case "result":
+            return {
+              ...state,
+              step: "seats",
+            };
           case "cinemas":
             return { ...state, city: null, step: "cities" };
           case "showtimes":
@@ -84,6 +100,11 @@ export default function Theater() {
     dispatch({
       type: "RESERVATION_SUCCESS",
       payload: reservation,
+    });
+  };
+  const handleReservationFail = () => {
+    dispatch({
+      type: "RESERVATION_FAILED",
     });
   };
   const renderStep = () => {
@@ -132,13 +153,15 @@ export default function Theater() {
             booking={booking}
             onBack={handleBack}
             onSuccess={handleReservationSuccess}
+            onFail={handleReservationFail}
           />
         );
-      case "success":
+      case "result":
         return (
           <ReservationStep
-            reservation={booking.reservation}
+            status={booking.reservationStatus}
             onDone={() => dispatch({ type: "RESET" })}
+            onRetry={() => dispatch({ type: "BACK" })}
           />
         );
       default:

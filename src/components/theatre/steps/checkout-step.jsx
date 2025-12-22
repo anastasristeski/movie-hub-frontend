@@ -3,11 +3,10 @@ import { formatShowtime } from "@/lib/formatDate";
 import { Check, ChevronLeft } from "lucide-react";
 import { useState } from "react";
 
-export default function CheckoutStep({ booking, onBack, onSuccess }) {
+export default function CheckoutStep({ booking, onBack, onSuccess, onFail }) {
   const { city, cinema, showtime, seats } = booking;
   const total = seats.length * booking.showtime.pricePerSeat;
   const [loading, setLoading] = useState(false);
-  console.log("BOOKING OBJECT", booking);
 
   const handleConfirm = async () => {
     try {
@@ -17,21 +16,14 @@ export default function CheckoutStep({ booking, onBack, onSuccess }) {
       });
       onSuccess(response.data);
     } catch (error) {
-      if (error.response?.status === 400) {
-        alert(error.resposnse.data.message);
-        onBack();
+      if (error.response?.status === 409) {
+        onFail();
       }
     } finally {
       setLoading(false);
     }
   };
-  if (loading) {
-    return (
-      <div className="flex justify-center py-20">
-        <div className="animate-spin rounded-full h-10 w-10 border-4 border-(--accent) border-t-transparent" />
-      </div>
-    );
-  }
+
   return (
     <div>
       <button
@@ -111,10 +103,27 @@ export default function CheckoutStep({ booking, onBack, onSuccess }) {
 
         <button
           onClick={handleConfirm}
-          className="w-full py-3 bg-(--primary) hover:bg-(--primary)/90 text-(--primary-foreground) rounded-lg font-semibold transition flex items-center justify-center gap-2"
+          disabled={loading}
+          className={`w-full py-3 rounded-lg font-semibold transition flex items-center justify-center gap-2
+    ${
+      loading
+        ? "bg-(--primary)/60 cursor-not-allowed"
+        : "bg-(--primary) hover:bg-(--primary)/90"
+    }
+    text-(--primary-foreground)
+  `}
         >
-          <Check className="w-5 h-5" />
-          Confirm & Pay
+          {loading ? (
+            <>
+              <span className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent" />
+              Processing...
+            </>
+          ) : (
+            <>
+              <Check className="w-5 h-5" />
+              Confirm & Pay
+            </>
+          )}
         </button>
       </div>
     </div>
