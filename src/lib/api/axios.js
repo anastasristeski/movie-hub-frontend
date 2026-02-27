@@ -2,7 +2,6 @@ import { clearAccessToken, getAccessToken, setAccessToken } from "./auth";
 
 import axios from "axios";
 
-console.log("NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
 const baseURL =
   process.env.API_URL ??
   process.env.NEXT_PUBLIC_API_URL ??
@@ -11,6 +10,7 @@ const api = axios.create({
   baseURL,
   withCredentials: true,
 });
+console.log(baseURL);
 
 api.interceptors.request.use((config) => {
   const token = getAccessToken();
