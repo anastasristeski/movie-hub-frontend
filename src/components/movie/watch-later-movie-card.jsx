@@ -3,7 +3,7 @@ import Link from "next/link";
 import { Star, Play, Trash2 } from "lucide-react";
 
 export default function WatchLaterMovieCard({ movie, onRemove }) {
-  const ratingValue = movie.rating ?? movie.voteAverage;
+  const ratingValue = movie?.rating ?? movie?.voteAverage;
   const rating =
     ratingValue && ratingValue > 0 ? ratingValue.toFixed(1) : "N/A";
   console.log("WatchLaterMovieCard render", {

@@ -3,7 +3,8 @@ import Link from "next/link";
 import { Star, Play } from "lucide-react";
 
 export default function MovieCard({ movie }) {
-  const ratingValue = movie.rating ?? movie.voteAverage;
+  if (!movie) return null;
+  const ratingValue = movie?.rating ?? movie?.voteAverage;
   const rating =
     ratingValue && ratingValue > 0 ? ratingValue.toFixed(1) : "N/A";
 
