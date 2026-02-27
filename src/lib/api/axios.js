@@ -10,7 +10,11 @@ const api = axios.create({
   baseURL,
   withCredentials: true,
 });
-console.log(baseURL);
+console.log({
+  API_URL: process.env.API_URL,
+  NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
+  baseURL,
+});
 
 api.interceptors.request.use((config) => {
   const token = getAccessToken();
