@@ -3,9 +3,12 @@ import { clearAccessToken, getAccessToken, setAccessToken } from "./auth";
 import axios from "axios";
 
 console.log("NEXT_PUBLIC_API_URL:", process.env.NEXT_PUBLIC_API_URL);
-
+const baseURL =
+  process.env.API_URL ??
+  process.env.NEXT_PUBLIC_API_URL ??
+  "http://localhost:8080/api";
 const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api",
+  baseURL,
   withCredentials: true,
 });
 
