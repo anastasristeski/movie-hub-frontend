@@ -1,8 +1,9 @@
 "use client";
-import { useAuth } from "@/app/context/AuthContext";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { LogOut, User } from "lucide-react";
+import { useAuth } from "../app/context/AuthContext";
 export default function Navbar() {
   const pathname = usePathname();
   const { user, loading, logout } = useAuth();

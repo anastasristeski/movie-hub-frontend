@@ -1,7 +1,8 @@
 "use client";
-import ReservationCard from "@/components/reservation/reservation-card";
-import api from "@/lib/api/axios";
+import ReservationCard from "../../../components/reservation/reservation-card";
+
 import { useEffect, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function ReservationsTab() {
   const [reservations, setReservations] = useState([]);

@@ -1,8 +1,9 @@
 "use client";
-import { useAuth } from "@/app/context/AuthContext";
-import api from "@/lib/api/axios";
+
 import { X } from "lucide-react";
 import { useState } from "react";
+import api from "../../lib/api/axios";
+import { useAuth } from "../../app/context/AuthContext";
 
 export default function EditProfileModal({ user, onClose }) {
   const { setUser } = useAuth();

@@ -1,9 +1,9 @@
-import Navbar from "@/components/navbar";
+import Navbar from "../components/navbar";
 import "./globals.css";
-import Footer from "@/components/footer";
+import Footer from "../components/footer";
 import { AuthProvider } from "./context/AuthContext";
 import { LoadingProvider } from "./context/LoadingContext";
-import GlobalLoader from "@/components/global-loader";
+import GlobalLoader from "../components/global-loader";
 export const metadata = {
   title: "Moviehub",
   description: "Movies platform",

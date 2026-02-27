@@ -1,8 +1,8 @@
 "use client";
 
-import { clearAccessToken, setAccessToken } from "@/lib/api/auth";
-import api from "@/lib/api/axios";
 import { createContext, useState, useEffect, useContext } from "react";
+import api from "../../lib/api/axios";
+import { clearAccessToken, setAccessToken } from "../../lib/api/auth";
 
 const AuthContext = createContext(null);
 

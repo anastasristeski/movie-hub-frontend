@@ -1,4 +1,4 @@
-import Theater from "@/components/theatre/theaters";
+import Theater from "../../../components/theatre/theaters";
 
 export default function Theatres() {
   return (

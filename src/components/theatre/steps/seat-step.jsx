@@ -1,7 +1,8 @@
 "use client";
-import api from "@/lib/api/axios";
+
 import { Armchair, ChevronLeft, Euro } from "lucide-react";
 import { useEffect, useMemo, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function SeatStep({ showtime, onBack, onSelectCheckout }) {
   const [allSeats, setAllSeats] = useState([]);
@@ -13,7 +14,7 @@ export default function SeatStep({ showtime, onBack, onSelectCheckout }) {
       setLoading(true);
       try {
         const response = await api.get(
-          `/reservation/availability/${showtime.id}`
+          `/reservation/availability/${showtime.id}`,
         );
         console.log(response.data);
         setAllSeats(response.data.allSeats);
@@ -39,7 +40,7 @@ export default function SeatStep({ showtime, onBack, onSelectCheckout }) {
   const toggleSeat = (seat) => {
     if (takenSeats.includes(seat)) return;
     setSelectedSeats((prev) =>
-      prev.includes(seat) ? prev.filter((s) => s !== seat) : [...prev, seat]
+      prev.includes(seat) ? prev.filter((s) => s !== seat) : [...prev, seat],
     );
   };
 
@@ -102,8 +103,8 @@ export default function SeatStep({ showtime, onBack, onSelectCheckout }) {
                         taken
                           ? "bg-(--muted-foreground)/60 cursor-not-allowed "
                           : selected
-                          ? "bg-(--primary) text-(--primary-foreground)"
-                          : "bg-(--card) border border-(--border) hover:border-(--primary)"
+                            ? "bg-(--primary) text-(--primary-foreground)"
+                            : "bg-(--card) border border-(--border) hover:border-(--primary)"
                       }`}
                   >
                     <Armchair className="w-5 h-5 text-(--accent)" />

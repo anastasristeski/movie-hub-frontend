@@ -1,16 +1,17 @@
 "use client";
-import api from "@/lib/api/axios";
 
-import { formatRuntime } from "@/lib/formatRuntime";
+import { formatRuntime } from "../../../lib/formatRuntime";
+
 import { ChevronLeft, Clock, Star, Ticket } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
   const [showTimes, setShowTimes] = useState([]);
   const [loading, setLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState(
-    () => new Date().toISOString().split("T")[0]
+    () => new Date().toISOString().split("T")[0],
   );
   const dates = useMemo(() => {
     return Array.from({ length: 7 }, (_, i) => {
@@ -22,8 +23,8 @@ export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
           i === 0
             ? "Today"
             : i === 1
-            ? "Tommorow"
-            : d.toLocaleDateString(undefined, { weekday: "long" }),
+              ? "Tommorow"
+              : d.toLocaleDateString(undefined, { weekday: "long" }),
       };
     });
   }, []);
@@ -33,7 +34,7 @@ export default function ShowtimeStep({ cinema, onBack, onSelectShowtime }) {
       setLoading(true);
       try {
         const response = await api.get(
-          `/showtime/cinema/${cinema.id}?date=${selectedDate}`
+          `/showtime/cinema/${cinema.id}?date=${selectedDate}`,
         );
         console.log("Showtime response", response.data);
         setShowTimes(response.data);

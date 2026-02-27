@@ -1,4 +1,4 @@
-import { formatShowtime } from "@/lib/formatDate";
+import { formatShowtime } from "../../lib/formatDate";
 import { Calendar, MapPin, Users } from "lucide-react";
 
 export default function ReservationCard({ reservations }) {

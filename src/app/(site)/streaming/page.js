@@ -1,11 +1,13 @@
 "use client";
 
-import StreamingMoviesGrid from "@/components/movie/streaming-movies-grid";
-import api from "@/lib/api/axios";
+import StreamingMoviesGrid from "../../../components/movie/movie-card";
+
 import { useEffect, useRef, useState } from "react";
 import CountUp from "react-countup";
-import { useLoading } from "@/app/context/LoadingContext";
+
+import { useLoading } from "../../../app/context/LoadingContext";
 import { Search } from "lucide-react";
+import api from "../../../lib/api/axios";
 
 export default function StreamingPage() {
   const { setIsLoading } = useLoading();
@@ -32,8 +34,8 @@ export default function StreamingPage() {
         setIsLoading(true);
         const res = await api.get(
           `/movies/search?query=${encodeURIComponent(
-            trimmedQuery
-          )}&page=0&size=30`
+            trimmedQuery,
+          )}&page=0&size=30`,
         );
         setMovies(res.data.content);
         setTotalPages(res.data.totalPages);
@@ -154,7 +156,7 @@ export default function StreamingPage() {
                 >
                   {p + 1}
                 </button>
-              )
+              ),
             )}
 
             <button

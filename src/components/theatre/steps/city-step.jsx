@@ -1,7 +1,8 @@
 "use client";
-import api from "@/lib/api/axios";
+
 import { Building2, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function CityStep({ onSelectCity }) {
   const [cities, setCities] = useState([]);

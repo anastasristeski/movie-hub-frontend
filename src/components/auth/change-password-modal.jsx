@@ -1,6 +1,6 @@
-import api from "@/lib/api/axios";
 import { Eye, EyeOff, Lock, X } from "lucide-react";
 import { useState } from "react";
+import api from "../../lib/api/axios";
 
 export default function ChangePasswordModal({ onClose }) {
   const [formData, setFormData] = useState({

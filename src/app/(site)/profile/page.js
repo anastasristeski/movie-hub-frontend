@@ -1,14 +1,17 @@
 "use client";
-import { useAuth } from "@/app/context/AuthContext";
-import ChangePasswordModal from "@/components/auth/change-password-modal";
-import EditProfileModal from "@/components/auth/edit-profile-modal";
 
-import ProfileHeader from "@/components/profile/profile-header";
-import ProfileTabs from "@/components/profile/tabs/profile-tabs";
-import { formatDate } from "@/lib/formatDate";
+import ChangePasswordModal from "../../../components/auth/change-password-modal";
+
+import EditProfileModal from "../../../components/auth/edit-profile-modal";
+
+import ProfileHeader from "../../../components/profile/profile-header";
+import ProfileTabs from "../../../components/profile/tabs/profile-tabs";
+import { formatDate } from "../../../lib/formatDate";
+
 import { Calendar, Key, Mail, User } from "lucide-react";
 
 import { useState } from "react";
+import { useAuth } from "../../context/AuthContext";
 export default function Profile() {
   const { user, loading } = useAuth();
   const [showEditModal, setShowEditModal] = useState(false);

@@ -1,6 +1,6 @@
-import Hero from "@/components/hero";
+import Hero from "../components/hero";
 
-import TrendingMoviesRow from "@/components/movie/trending-movies-row";
+import TrendingMoviesRow from "../components/movie/trending-movies-row";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api";
 

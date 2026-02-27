@@ -1,7 +1,8 @@
 "use client";
-import api from "@/lib/api/axios";
+
 import { Building2, ChevronLeft, MapPin } from "lucide-react";
 import { useEffect, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function CinemaExplorer({ city, onSelectCinema, onBack }) {
   const [cinemas, setCinemas] = useState([]);

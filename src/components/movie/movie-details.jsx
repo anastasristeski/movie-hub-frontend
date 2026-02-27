@@ -8,12 +8,15 @@ import {
   Clock,
   Loader2,
 } from "lucide-react";
-import { formatDate } from "@/lib/formatDate";
+
 import { useEffect, useState } from "react";
-import api from "@/lib/api/axios";
+
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/context/AuthContext";
-import { formatRuntime } from "@/lib/formatRuntime";
+
+import { formatRuntime } from "../../lib/formatRuntime";
+import api from "../../lib/api/axios";
+import { formatDate } from "../../lib/formatDate";
+import { useAuth } from "../../app/context/AuthContext";
 
 export default function MovieDetails({ movie, trailerKey }) {
   const { user } = useAuth();
@@ -34,7 +37,7 @@ export default function MovieDetails({ movie, trailerKey }) {
         const response = await api.get("/watch-later");
         console.log(response);
         const exists = response.data.some(
-          (m) => m.movieResponse.tmdbId === movie.tmdbId
+          (m) => m.movieResponse.tmdbId === movie.tmdbId,
         );
         setIsSaved(exists);
       } catch (error) {

@@ -1,7 +1,8 @@
-import api from "@/lib/api/axios";
-import { formatShowtime } from "@/lib/formatDate";
+import { formatShowtime } from "../../../lib/formatDate";
+
 import { Check, ChevronLeft } from "lucide-react";
 import { useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function CheckoutStep({ booking, onBack, onSuccess, onFail }) {
   const { city, cinema, showtime, seats } = booking;

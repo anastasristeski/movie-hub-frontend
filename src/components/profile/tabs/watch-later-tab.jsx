@@ -1,8 +1,9 @@
 "use client";
 
-import WatchLaterGrid from "@/components/movie/watch-later-grid";
-import api from "@/lib/api/axios";
+import WatchLaterGrid from "../../../components/movie/watch-later-grid";
+
 import { useEffect, useState } from "react";
+import api from "../../../lib/api/axios";
 
 export default function WatchLaterTab() {
   const [movies, setMovies] = useState([]);

@@ -1,11 +1,13 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import api from "@/lib/api/axios";
+
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/context/AuthContext.js";
-import { setAccessToken } from "@/lib/api/auth";
+
 import { PuffLoader } from "react-spinners";
+import api from "../../lib/api/axios";
+import { useAuth } from "../../app/context/AuthContext";
+import { setAccessToken } from "../../lib/api/auth";
 export default function SignInForm({ onSuccess }) {
   const router = useRouter();
   const { setUser } = useAuth();
